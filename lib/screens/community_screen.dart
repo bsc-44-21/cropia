@@ -5,6 +5,6 @@ class CommunityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Community — posts & alerts placeholder'));
+    return const Center(child: Text('Community — posts & alerts'));
   }
 }

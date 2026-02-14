@@ -5,6 +5,6 @@ class AgriBotScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('AgriBot — AI assistant chat placeholder'));
+    return const Center(child: Text('AgriBot — AI assistant chat'));
   }
 }
