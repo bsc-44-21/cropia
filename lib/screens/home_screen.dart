@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'detect_screen.dart';
 import 'weather_screen.dart';
 import 'agribot_screen.dart';
@@ -43,34 +44,30 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
-                icon: const Icon(Icons.home_outlined),
+              AppIconButton(
+                activeIcon: Icons.home,
+                inactiveIcon: Icons.home_outlined,
+                active: _selectedIndex == 0,
                 onPressed: () => _onItemTapped(0),
-                color: _selectedIndex == 0
-                    ? Theme.of(context).colorScheme.primary
-                    : null,
               ),
-              IconButton(
-                icon: const Icon(Icons.cloud_outlined),
+              AppIconButton(
+                activeIcon: Icons.cloud,
+                inactiveIcon: Icons.cloud_outlined,
+                active: _selectedIndex == 1,
                 onPressed: () => _onItemTapped(1),
-                color: _selectedIndex == 1
-                    ? Theme.of(context).colorScheme.primary
-                    : null,
               ),
               const SizedBox(width: 48), // space for FAB
-              IconButton(
-                icon: const Icon(Icons.smart_toy_outlined),
+              AppIconButton(
+                activeIcon: Icons.smart_toy,
+                inactiveIcon: Icons.smart_toy_outlined,
+                active: _selectedIndex == 3,
                 onPressed: () => _onItemTapped(3),
-                color: _selectedIndex == 3
-                    ? Theme.of(context).colorScheme.primary
-                    : null,
               ),
-              IconButton(
-                icon: const Icon(Icons.people_outline),
+              AppIconButton(
+                activeIcon: Icons.people,
+                inactiveIcon: Icons.people_outline,
+                active: _selectedIndex == 4,
                 onPressed: () => _onItemTapped(4),
-                color: _selectedIndex == 4
-                    ? Theme.of(context).colorScheme.primary
-                    : null,
               ),
             ],
           ),
@@ -79,7 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, '/detect'),
-        child: const Icon(Icons.camera_alt),
+        backgroundColor: AppTheme.primary,
+        child: const Icon(Icons.camera_alt, color: Colors.white),
       ),
     );
   }

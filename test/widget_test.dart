@@ -11,20 +11,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:cropia/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('App loads and shows home UI', (WidgetTester tester) async {
+    // Build the app and settle
+    await tester.pumpWidget(const CropiaApp());
+    await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // AppBar title should be present
+    expect(find.text('Cropia'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Camera FAB should be present
+    expect(find.byIcon(Icons.camera_alt), findsOneWidget);
   });
 }

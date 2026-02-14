@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'theme.dart';
 import 'screens/home_screen.dart';
 import 'screens/detect_screen.dart';
 import 'screens/weather_screen.dart';
@@ -20,9 +21,16 @@ class CropiaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Cropia',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.primary),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppTheme.primary,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+        scaffoldBackgroundColor: Colors.white,
       ),
       initialRoute: '/',
       routes: {
