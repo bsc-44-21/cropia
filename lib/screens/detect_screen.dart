@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../theme.dart';
 
 class DetectScreen extends StatefulWidget {
@@ -29,6 +30,30 @@ class _DetectScreenState extends State<DetectScreen> {
       _disease = 'Early Leaf Spot';
       _severity = 0.68;
     });
+  }
+
+  Future<void> _pickImageFromCamera() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      setState(() {
+        _image = File(photo.path);
+        _disease = null;
+        _severity = null;
+      });
+    }
+  }
+
+  Future<void> _pickImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _image = File(image.path);
+        _disease = null;
+        _severity = null;
+      });
+    }
   }
 
   void _clear() {
@@ -85,12 +110,7 @@ class _DetectScreenState extends State<DetectScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: hook camera
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Camera not implemented')),
-                    );
-                  },
+                  onPressed: _pickImageFromCamera,
                   icon: const Icon(Icons.camera_alt),
                   label: const Text('Camera'),
                   style: ElevatedButton.styleFrom(
@@ -98,12 +118,7 @@ class _DetectScreenState extends State<DetectScreen> {
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: hook gallery
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Gallery not implemented')),
-                    );
-                  },
+                  onPressed: _pickImageFromGallery,
                   icon: const Icon(Icons.upload_file),
                   label: const Text('Upload'),
                 ),
