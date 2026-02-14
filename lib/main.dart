@@ -26,8 +26,8 @@ class CropiaApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.primary),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
-          backgroundColor: AppTheme.primary,
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
           elevation: 0,
         ),
         scaffoldBackgroundColor: Colors.white,
