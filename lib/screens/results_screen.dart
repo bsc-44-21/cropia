@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart' as pdf;
 import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../theme.dart';
 
@@ -113,45 +113,22 @@ class ResultsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 18),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () async {
-                      final summary = _buildSummary(
-                        disease,
-                        signs,
-                        prevention,
-                        chemicals,
-                        risk,
-                      );
-                      await _exportPdf(context, summary);
-                    },
-                    icon: const Icon(Icons.download),
-                    label: const Text('Download PDF'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppTheme.primary,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      final summary = _buildSummary(
-                        disease,
-                        signs,
-                        prevention,
-                        chemicals,
-                        risk,
-                      );
-                      Share.share(summary, subject: 'Cropia Analysis Result');
-                    },
-                    icon: const Icon(Icons.share),
-                    label: const Text('Share (text)'),
-                  ),
-                ),
-              ],
+            ElevatedButton.icon(
+              onPressed: () async {
+                final summary = _buildSummary(
+                  disease,
+                  signs,
+                  prevention,
+                  chemicals,
+                  risk,
+                );
+                await _exportPdf(context, summary);
+              },
+              icon: const Icon(Icons.download),
+              label: const Text('Download PDF'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.primary,
+              ),
             ),
             const SizedBox(height: 12),
             ElevatedButton(
@@ -188,13 +165,13 @@ class ResultsScreen extends StatelessWidget {
 
   Future<void> _exportPdf(BuildContext context, String summary) async {
     try {
-      final pdf = pw.Document();
+      final pdfDoc = pw.Document();
       final imageBytes = await image.readAsBytes();
       final pwImage = pw.MemoryImage(imageBytes);
 
-      pdf.addPage(
+      pdfDoc.addPage(
         pw.MultiPage(
-          pageFormat: pw.PageFormat.a4,
+          pageFormat: pdf.PdfPageFormat.a4,
           build: (pw.Context ctx) => [
             pw.Center(
               child: pw.Image(
@@ -210,13 +187,29 @@ class ResultsScreen extends StatelessWidget {
         ),
       );
 
-      final dir = await getTemporaryDirectory();
-      final file = File(
-        '${dir.path}/cropia_result_${DateTime.now().millisecondsSinceEpoch}.pdf',
-      );
-      await file.writeAsBytes(await pdf.save());
+      // Try to save into the device Downloads folder (Android). Fall back to temp dir.
+      Directory targetDir;
+      try {
+        final dirs = await getExternalStorageDirectories(
+          type: StorageDirectory.downloads,
+        );
+        if (dirs != null && dirs.isNotEmpty) {
+          targetDir = dirs.first;
+        } else {
+          targetDir = await getTemporaryDirectory();
+        }
+      } catch (_) {
+        targetDir = await getTemporaryDirectory();
+      }
 
-      await Share.shareFiles([file.path], text: 'Cropia analysis result');
+      final file = File(
+        '${targetDir.path}/cropia_result_${DateTime.now().millisecondsSinceEpoch}.pdf',
+      );
+      await file.writeAsBytes(await pdfDoc.save());
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Saved PDF to ${file.path}')));
     } catch (e) {
       ScaffoldMessenger.of(
         context,
