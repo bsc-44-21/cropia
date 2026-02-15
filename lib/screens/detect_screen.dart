@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../theme.dart';
+import 'analyze_screen.dart';
 
 class DetectScreen extends StatefulWidget {
   const DetectScreen({super.key});
@@ -200,7 +201,15 @@ class _DetectScreenState extends State<DetectScreen> {
               )
             else
               ElevatedButton(
-                onPressed: _analyze,
+                onPressed: _image != null
+                    ? () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => AnalyzeScreen(image: _image!),
+                          ),
+                        );
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.primary,
                   padding: const EdgeInsets.symmetric(vertical: 14),
