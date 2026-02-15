@@ -2,15 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import '../theme.dart';
+import 'results_screen.dart';
+
 class AnalyzeScreen extends StatefulWidget {
   final File image;
-  final double targetSeverity; // 0.0 - 1.0
-
-  const AnalyzeScreen({
-    Key? key,
-    required this.image,
-    this.targetSeverity = 0.68,
-  }) : super(key: key);
+  const AnalyzeScreen({Key? key, required this.image}) : super(key: key);
 
   @override
   State<AnalyzeScreen> createState() => _AnalyzeScreenState();
@@ -22,6 +19,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
   late final AnimationController _percentController;
   late final Animation<double> _lineAnimation;
   late final Animation<double> _percentAnimation;
+  bool _navigatedToResults = false;
 
   @override
   void initState() {
@@ -32,22 +30,50 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
       duration: const Duration(milliseconds: 1400),
     )..repeat(reverse: true);
 
+    _lineAnimation = CurvedAnimation(
+      parent: _lineController,
+      curve: Curves.easeInOut,
+    );
+
     _percentController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2200),
+      duration: const Duration(milliseconds: 3000),
     );
 
     _percentAnimation =
-        Tween<double>(begin: 0, end: widget.targetSeverity * 100).animate(
+        Tween<double>(begin: 0, end: 100).animate(
           CurvedAnimation(parent: _percentController, curve: Curves.easeOut),
         )..addListener(() {
           setState(() {});
         });
 
-    _lineAnimation = CurvedAnimation(
-      parent: _lineController,
-      curve: Curves.easeInOut,
-    );
+    _percentController.addStatusListener((status) async {
+      if (status == AnimationStatus.completed && !_navigatedToResults) {
+        _navigatedToResults = true;
+
+        // simulated analysis result
+        final result = {
+          'disease': 'Early Leaf Spot',
+          'signs': [
+            'Yellow spots on leaves',
+            'Dark lesions with concentric rings',
+          ],
+          'prevention': ['Improve air circulation', 'Avoid overhead watering'],
+          'chemicals': ['Azoxystrobin', 'Chlorothalonil'],
+          'risk': 0.68,
+        };
+
+        // navigate to results and replace this screen
+        if (mounted) {
+          await Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) =>
+                  ResultsScreen(image: widget.image, analysis: result),
+            ),
+          );
+        }
+      }
+    });
 
     _percentController.forward();
   }
@@ -61,11 +87,15 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final percent = _percentAnimation.value;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Analyzing')),
       body: Column(
         children: [
-          Expanded(
+          // smaller image area so controls are visible
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.5,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: ClipRRect(
@@ -73,7 +103,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     final height = constraints.maxHeight;
-                    final lineHeight = 3.0;
+                    const lineHeight = 3.0;
                     return Stack(
                       children: [
                         Positioned.fill(
@@ -95,7 +125,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
                                     gradient: LinearGradient(
                                       colors: [
                                         Colors.transparent,
-                                        Colors.green.withOpacity(0.9),
+                                        AppTheme.primary.withOpacity(0.95),
                                         Colors.transparent,
                                       ],
                                     ),
@@ -104,13 +134,6 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
                               ),
                             );
                           },
-                        ),
-                        // optional center label
-                        Positioned(
-                          bottom: 12,
-                          left: 12,
-                          right: 12,
-                          child: Container(),
                         ),
                       ],
                     );
@@ -128,15 +151,18 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Analysis'),
-                    Text('${_percentAnimation.value.round()}%'),
+                    Text('${percent.round()}%'),
                   ],
                 ),
                 const SizedBox(height: 8),
-                LinearProgressIndicator(value: _percentAnimation.value / 100),
+                LinearProgressIndicator(value: (percent / 100).clamp(0.0, 1.0)),
                 const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Done'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primary,
+                  ),
+                  child: const Text('Cancel'),
                 ),
               ],
             ),
