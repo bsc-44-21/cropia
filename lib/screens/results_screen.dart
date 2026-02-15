@@ -1,6 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+
 import '../theme.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -109,6 +113,47 @@ class ResultsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 18),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () async {
+                      final summary = _buildSummary(
+                        disease,
+                        signs,
+                        prevention,
+                        chemicals,
+                        risk,
+                      );
+                      await _exportPdf(context, summary);
+                    },
+                    icon: const Icon(Icons.download),
+                    label: const Text('Download PDF'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppTheme.primary,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      final summary = _buildSummary(
+                        disease,
+                        signs,
+                        prevention,
+                        chemicals,
+                        risk,
+                      );
+                      Share.share(summary, subject: 'Cropia Analysis Result');
+                    },
+                    icon: const Icon(Icons.share),
+                    label: const Text('Share (text)'),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(),
               style: ElevatedButton.styleFrom(
@@ -120,5 +165,62 @@ class ResultsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _buildSummary(
+    String disease,
+    List<String> signs,
+    List<String> prevention,
+    List<String> chemicals,
+    double risk,
+  ) {
+    final buffer = StringBuffer();
+    buffer.writeln('Disease: $disease');
+    buffer.writeln('Risk: ${(risk * 100).round()}%');
+    buffer.writeln('\nSigns & Symptoms:');
+    for (final s in signs) buffer.writeln('- $s');
+    buffer.writeln('\nPrevention Measures:');
+    for (final p in prevention) buffer.writeln('- $p');
+    buffer.writeln('\nRecommended Chemicals:');
+    for (final c in chemicals) buffer.writeln('- $c');
+    return buffer.toString();
+  }
+
+  Future<void> _exportPdf(BuildContext context, String summary) async {
+    try {
+      final pdf = pw.Document();
+      final imageBytes = await image.readAsBytes();
+      final pwImage = pw.MemoryImage(imageBytes);
+
+      pdf.addPage(
+        pw.MultiPage(
+          pageFormat: pw.PageFormat.a4,
+          build: (pw.Context ctx) => [
+            pw.Center(
+              child: pw.Image(
+                pwImage,
+                width: 400,
+                height: 300,
+                fit: pw.BoxFit.cover,
+              ),
+            ),
+            pw.SizedBox(height: 12),
+            pw.Text(summary),
+          ],
+        ),
+      );
+
+      final dir = await getTemporaryDirectory();
+      final file = File(
+        '${dir.path}/cropia_result_${DateTime.now().millisecondsSinceEpoch}.pdf',
+      );
+      await file.writeAsBytes(await pdf.save());
+
+      await Share.shareFiles([file.path], text: 'Cropia analysis result');
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error exporting PDF: $e')));
+    }
   }
 }
