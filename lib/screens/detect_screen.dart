@@ -116,6 +116,7 @@ class _DetectScreenState extends State<DetectScreen> {
                   label: const Text('Camera'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.primary,
+                    foregroundColor: Colors.white,
                   ),
                 ),
                 ElevatedButton.icon(
@@ -212,6 +213,7 @@ class _DetectScreenState extends State<DetectScreen> {
                     : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 child: const Text(

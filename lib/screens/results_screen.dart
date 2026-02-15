@@ -128,6 +128,7 @@ class ResultsScreen extends StatelessWidget {
               label: const Text('Download PDF'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppTheme.primary,
+                foregroundColor: Colors.white,
               ),
             ),
             const SizedBox(height: 12),
@@ -135,6 +136,7 @@ class ResultsScreen extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppTheme.primary,
+                foregroundColor: Colors.white,
               ),
               child: const Text('Back'),
             ),

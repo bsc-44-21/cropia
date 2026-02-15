@@ -161,6 +161,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
                   onPressed: () => Navigator.of(context).pop(),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.primary,
+                    foregroundColor: Colors.white,
                   ),
                   child: const Text('Cancel'),
                 ),
