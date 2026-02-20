@@ -78,3 +78,44 @@ class HomeContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 24),
+
+// Cropla Tools Section
+          const Text(
+            'Cropla Tools',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 12),
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 4,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            children: [
+              _buildToolItem(
+                icon: Icons.health_and_safety,
+                label: 'Disease Detector',
+                onTap: () => Navigator.pushNamed(context, '/detect'),
+              ),
+              _buildToolItem(
+                icon: Icons.smart_toy,
+                label: 'Agribot Assistant',
+                onTap: () => context.findAncestorStateOfType<_HomeScreenState>()?.onToolTap(3),
+              ),
+              _buildToolItem(
+                icon: Icons.cloud,
+                label: 'Weather Notifier',
+                onTap: () => context.findAncestorStateOfType<_HomeScreenState>()?.onToolTap(1),
+              ),
+              _buildToolItem(
+                icon: Icons.people,
+                label: 'Live Community',
+                onTap: () => context.findAncestorStateOfType<_HomeScreenState>()?.onToolTap(4),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 24),
