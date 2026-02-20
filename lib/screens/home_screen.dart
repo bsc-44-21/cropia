@@ -25,3 +25,32 @@ class HomeContent extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppTheme.primary.withOpacity(0.3)),
             ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.location_on, color: AppTheme.primary, size: 20),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Zomba',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '26 °C (26 °C, 26 °C)',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 20),
