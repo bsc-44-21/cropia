@@ -119,3 +119,64 @@ class HomeContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 24),
+
+          // Trending Now Section
+          const Text(
+            'Trending Now',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              _buildTrendingChip('Trending'),
+              const SizedBox(width: 8),
+              _buildTrendingChip('Trending'),
+              const SizedBox(width: 8),
+              _buildTrendingChip('Trending'),
+            ],
+          ),
+
+          const SizedBox(height: 24),
+
+          // Agricultural Tips Section
+          const Text(
+            'Agricultural Tips',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: _buildTipsColumn([
+                  '1. In the morning',
+                  '2. After sun set',
+                  '3. Take care',
+                  '4. Use cool water',
+                  '5. Not warm',
+                  '6. This is all!',
+                ]),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: _buildTipsColumn([
+                  '1. In the morning',
+                  '2. After sun set',
+                  '3. Take care',
+                  '4. Cold water',
+                  '5. Not warm',
+                  '6. You got this!',
+                ]),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
