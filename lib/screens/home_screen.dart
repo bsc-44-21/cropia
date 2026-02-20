@@ -54,3 +54,27 @@ class HomeContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 20),
+
+          // Search tool trending tips
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+ decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Row(
+              children: [
+                Icon(Icons.search, size: 20, color: Colors.grey),
+                SizedBox(width: 8),
+                Text(
+                  'search tool trending tips',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
