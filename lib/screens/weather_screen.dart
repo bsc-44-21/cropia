@@ -139,5 +139,64 @@ class WeatherScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 20),
+  /// WEATHER STATS
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  _WeatherInfo(
+                    icon: Icons.air,
+                    value: "15 km",
+                    label: "Wind now",
+                  ),
+                  _WeatherInfo(
+                    icon: Icons.water_drop,
+                    value: "46%",
+                    label: "Humidity",
+                  ),
+                  _WeatherInfo(
+                    icon: Icons.umbrella,
+                    value: "87%",
+                    label: "Precipitation",
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 30),
+
+              const Text(
+                "Weekly Updates",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+
+              const SizedBox(height: 15),
+
+              SizedBox(
+                height: 170,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _WeeklyCard("26°", "11:19AM", weatherType: WeatherType.whiteWithSun),
+                    const SizedBox(width: 12),
+                    _WeeklyCard("22°", "12:00PM", weatherType: WeatherType.whiteCloudSun),
+                    const SizedBox(width: 12),
+                    _WeeklyCard("21°", "14:00PM", weatherType: WeatherType.sunny),
+                    const SizedBox(width: 12),
+                    _WeeklyCard("24°", "06:30AM", weatherType: WeatherType.darkCloudWithRain),
+                    const SizedBox(width: 12),
+                    _WeeklyCard("29°", "10:30PM", weatherType: WeatherType.whiteWithSun),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 25),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
         
