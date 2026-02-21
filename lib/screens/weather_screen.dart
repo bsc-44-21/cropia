@@ -88,5 +88,56 @@ class WeatherScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+ /// CLOUD
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+
+                          Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+
+                              /// Cloud circles
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  _cloudCircle(60),
+                                  _cloudCircle(85),
+                                  _cloudCircle(65),
+                                ],
+                              ),
+
+                              /// Base cloud
+                              Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade800,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          /// RAIN DROPS
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _rainDrop(Colors.blue.shade400),
+                              _rainDrop(Colors.blue.shade500),
+                              _rainDrop(Colors.blue.shade400),
+                              _rainDrop(Colors.blue.shade300),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
 
         
