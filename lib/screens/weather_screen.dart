@@ -268,4 +268,153 @@ enum WeatherType {
   sunny,
   darkCloudWithRain,
 }
-  
+  /// Weekly Card with different cloud types - Darker background
+class _WeeklyCard extends StatelessWidget {
+  final String temp;
+  final String time;
+  final WeatherType weatherType;
+
+  const _WeeklyCard(
+    this.temp, 
+    this.time, {
+    required this.weatherType,
+  });
+
+  Widget _getWeatherIcon() {
+    switch (weatherType) {
+      case WeatherType.whiteWithSun:
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Icon(
+              Icons.cloud,
+              size: 32,
+              color: Colors.grey[300],
+            ),
+            Positioned(
+              top: -8,
+              right: -8,
+              child: Icon(
+                Icons.wb_sunny,
+                size: 18,
+                color: Colors.orange[400],
+              ),
+            ),
+          ],
+        );
+      
+      case WeatherType.whiteCloudSun:
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Icon(
+              Icons.cloud,
+              size: 32,
+              color: Colors.grey[300],
+            ),
+            Positioned(
+              top: -5,
+              left: -5,
+              child: Icon(
+                Icons.wb_sunny,
+                size: 16,
+                color: Colors.orange[300],
+              ),
+            ),
+          ],
+        );
+      
+      case WeatherType.sunny:
+        return Icon(
+          Icons.wb_sunny,
+          size: 28,
+          color: Colors.orange[400],
+        );
+      
+      case WeatherType.darkCloudWithRain:
+        return Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
+            Icon(
+              Icons.cloud,
+              size: 32,
+              color: Colors.grey[700],
+            ),
+            Positioned(
+              bottom: -8,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.grain,
+                    size: 12,
+                    color: Colors.blue[500],
+                  ),
+                  const SizedBox(width: 2),
+                  Icon(
+                    Icons.grain,
+                    size: 14,
+                    color: Colors.blue[400],
+                  ),
+                  const SizedBox(width: 2),
+                  Icon(
+                    Icons.grain,
+                    size: 12,
+                    color: Colors.blue[500],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFD3D3D3), // Much darker background (Light Gray)
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.grey.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            temp,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          _getWeatherIcon(),
+          const SizedBox(height: 12),
+          Text(
+            time,
+            style: const TextStyle(
+              fontSize: 11,
+              color: Colors.black87, // Darker text for better contrast
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
