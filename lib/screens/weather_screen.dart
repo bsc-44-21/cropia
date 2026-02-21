@@ -199,4 +199,73 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 
-        
+/// Cloud Circle Builder
+  static Widget _cloudCircle(double size) {
+    return Container(
+      height: size,
+      width: size,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade800,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+
+  /// Rain Drop Builder
+  static Widget _rainDrop(Color color) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: Icon(
+        Icons.grain,
+        color: color,
+        size: 20,
+      ),
+    );
+  }
+}
+
+/// Weather Info Widget
+class _WeatherInfo extends StatelessWidget {
+  final IconData icon;
+  final String value;
+  final String label;
+
+  const _WeatherInfo({
+    required this.icon,
+    required this.value,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.blue, size: 28),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 13,
+            color: Colors.black54,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+enum WeatherType {
+  whiteWithSun,
+  whiteCloudSun,
+  sunny,
+  darkCloudWithRain,
+}
+  
