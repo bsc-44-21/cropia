@@ -217,3 +217,41 @@ class HomeContent extends StatelessWidget {
       ),
     );
   }
+  Widget _buildTrendingChip(String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.primary,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTipsColumn(List<String> tips) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: tips.map((tip) => Padding(
+          padding: const EdgeInsets.only(bottom: 6),
+          child: Text(
+            tip,
+            style: const TextStyle(fontSize: 13),
+          ),
+        )).toList(),
+      ),
+    );
+  }
+}
