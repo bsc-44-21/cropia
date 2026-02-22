@@ -8,7 +8,6 @@ import 'screens/community_screen.dart';
 import 'screens/tasks_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/auth/sign_in.dart';
-import 'screens/auth/sign_up.dart';
 
 void main() {
   runApp(const CropiaApp());
@@ -42,7 +41,6 @@ class CropiaApp extends StatelessWidget {
         '/tasks': (context) => const TasksScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/signin': (context) => const SignInScreen(),
-        '/signup': (context) => const SignUpScreen(),
       },
     );
   }
