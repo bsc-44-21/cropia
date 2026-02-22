@@ -32,9 +32,13 @@ class CropiaApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.white,
       ),
+
+      // 👇 App will start with SignUpScreen
       initialRoute: '/',
+
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => const SignUpScreen(), // ✅ changed here
+        '/home': (context) => const HomeScreen(),
         '/detect': (context) => const DetectScreen(),
         '/weather': (context) => const WeatherScreen(),
         '/agribot': (context) => const AgriBotScreen(),
