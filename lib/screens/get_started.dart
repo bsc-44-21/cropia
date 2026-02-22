@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({super.key});
@@ -13,20 +14,13 @@ class GetStartedScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Get Started',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 24),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.primary,
+                foregroundColor: AppTheme.white,
+              ),
               onPressed: () => Navigator.pushNamed(context, '/signin'),
-              child: const Text('Sign In'),
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/signup'),
-              child: const Text('Sign Up'),
+              child: const Text('Get Started'),
             ),
           ],
         ),

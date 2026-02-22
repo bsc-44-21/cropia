@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -45,11 +46,16 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.primary,
+                foregroundColor: AppTheme.white,
+              ),
               onPressed: _attemptSignIn,
               child: const Text('Sign In'),
             ),
             TextButton(
               onPressed: () => Navigator.pushNamed(context, '/signup'),
+              style: TextButton.styleFrom(foregroundColor: AppTheme.primary),
               child: const Text('Create account'),
             ),
           ],
