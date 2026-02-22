@@ -14,7 +14,6 @@ class HomeContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           // Location Card
           Container(
             width: double.infinity,
@@ -29,8 +28,7 @@ class HomeContent extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.location_on,
-                        color: AppTheme.primary, size: 20),
+                    Icon(Icons.location_on, color: AppTheme.primary, size: 20),
                     const SizedBox(width: 4),
                     const Text(
                       'Zomba',
@@ -44,10 +42,7 @@ class HomeContent extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   '26 °C (26 °C, 26 °C)',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -57,23 +52,18 @@ class HomeContent extends StatelessWidget {
 
           // Search Bar
           Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.grey[100],
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Row(
               children: [
-                Icon(Icons.search,
-                    size: 20, color: Colors.grey),
+                Icon(Icons.search, size: 20, color: Colors.grey),
                 SizedBox(width: 8),
                 Text(
                   'Search tool trending tips',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
                 ),
               ],
             ),
@@ -84,8 +74,7 @@ class HomeContent extends StatelessWidget {
           // Cropia Tools header
           const Text(
             'Cropia Tools',
-            style: TextStyle(
-                fontSize: 15, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
 
@@ -102,8 +91,7 @@ class HomeContent extends StatelessWidget {
                 context,
                 icon: Icons.health_and_safety,
                 label: 'Disease Detector',
-                onTap: () =>
-                    Navigator.pushNamed(context, '/detect'),
+                onTap: () => Navigator.pushNamed(context, '/detect'),
               ),
               _buildToolItem(
                 context,
@@ -137,9 +125,7 @@ class HomeContent extends StatelessWidget {
           // 🔥 Trending Section
           const Text(
             'Trending Now',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
 
           const SizedBox(height: 12),
@@ -149,12 +135,11 @@ class HomeContent extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: 5,
-              separatorBuilder: (_, __) =>
-                  const SizedBox(width: 12),
+              separatorBuilder: (_, __) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
                 return SizedBox(
                   width: 140,
-                  child: _buildTrendingImage(),
+                  child: _buildTrendingImage(index: index),
                 );
               },
             ),
@@ -165,9 +150,7 @@ class HomeContent extends StatelessWidget {
           // Tips Section
           const Text(
             'Agricultural Tips',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
 
           const SizedBox(height: 12),
@@ -200,7 +183,7 @@ class HomeContent extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          'lib/assets/images/download.jpg',
+                          'lib/assets/images/Disease 1.jpg',
                           height: 90,
                           width: 70,
                           fit: BoxFit.cover,
@@ -276,7 +259,14 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildTrendingImage() {
+  Widget _buildTrendingImage({int index = 0}) {
+    final diseases = [
+      'Disease 1.jpg',
+      'Disease 2.jpg',
+      'Disease 3.jpg',
+      'Disease 4.jpg',
+    ];
+    final diseaseImage = diseases[index % diseases.length];
     return Container(
       margin: const EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
@@ -295,14 +285,12 @@ class HomeContent extends StatelessWidget {
           children: [
             Positioned.fill(
               child: Image.asset(
-                'lib/assets/images/download.jpg',
+                'lib/assets/images/$diseaseImage',
                 fit: BoxFit.cover,
               ),
             ),
             Positioned.fill(
-              child: Container(
-                color: Colors.black.withOpacity(0.28),
-              ),
+              child: Container(color: Colors.black.withOpacity(0.28)),
             ),
             Positioned(
               top: 8,
@@ -329,8 +317,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildTipsColumn(
-      List<String> tips) {
+  Widget _buildTipsColumn(List<String> tips) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -341,13 +328,12 @@ class HomeContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: tips
-            .map((tip) => Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: Text(
-                    tip,
-                    style: const TextStyle(fontSize: 13),
-                  ),
-                ))
+            .map(
+              (tip) => Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Text(tip, style: const TextStyle(fontSize: 13)),
+              ),
+            )
             .toList(),
       ),
     );
@@ -358,12 +344,10 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() =>
-      _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState
-    extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = const [
@@ -376,105 +360,63 @@ class _HomeScreenState
 
   void _onItemTapped(int index) {
     if (index == 2) {
-      Navigator.pushNamed(
-          context, '/detect');
+      Navigator.pushNamed(context, '/detect');
       return;
     }
-    setState(() =>
-        _selectedIndex = index);
+    setState(() => _selectedIndex = index);
   }
 
   void onToolTap(int index) {
-    setState(() =>
-        _selectedIndex = index);
+    setState(() => _selectedIndex = index);
   }
 
   @override
-  Widget build(
-      BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor:
-            Colors.white,
-        elevation: 0,
-      ),
+      appBar: AppBar(backgroundColor: Colors.white, elevation: 0),
       body: _pages[_selectedIndex],
-      bottomNavigationBar:
-          BottomAppBar(
-        shape:
-            const CircularNotchedRectangle(),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
         notchMargin: 6.0,
         child: SizedBox(
           height: 60,
           child: Row(
-            mainAxisAlignment:
-                MainAxisAlignment
-                    .spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AppIconButton(
-                activeIcon:
-                    Icons.home,
-                inactiveIcon:
-                    Icons.home_outlined,
-                active:
-                    _selectedIndex ==
-                        0,
-                onPressed: () =>
-                    _onItemTapped(0),
+                activeIcon: Icons.home,
+                inactiveIcon: Icons.home_outlined,
+                active: _selectedIndex == 0,
+                onPressed: () => _onItemTapped(0),
               ),
               AppIconButton(
-                activeIcon:
-                    Icons.cloud,
-                inactiveIcon: Icons
-                    .cloud_outlined,
-                active:
-                    _selectedIndex ==
-                        1,
-                onPressed: () =>
-                    _onItemTapped(1),
+                activeIcon: Icons.cloud,
+                inactiveIcon: Icons.cloud_outlined,
+                active: _selectedIndex == 1,
+                onPressed: () => _onItemTapped(1),
               ),
-              const SizedBox(
-                  width: 48),
+              const SizedBox(width: 48),
               AppIconButton(
-                activeIcon: Icons
-                    .smart_toy,
-                inactiveIcon: Icons
-                    .smart_toy_outlined,
-                active:
-                    _selectedIndex ==
-                        3,
-                onPressed: () =>
-                    _onItemTapped(3),
+                activeIcon: Icons.smart_toy,
+                inactiveIcon: Icons.smart_toy_outlined,
+                active: _selectedIndex == 3,
+                onPressed: () => _onItemTapped(3),
               ),
               AppIconButton(
-                activeIcon:
-                    Icons.people,
-                inactiveIcon: Icons
-                    .people_outline,
-                active:
-                    _selectedIndex ==
-                        4,
-                onPressed: () =>
-                    _onItemTapped(4),
+                activeIcon: Icons.people,
+                inactiveIcon: Icons.people_outline,
+                active: _selectedIndex == 4,
+                onPressed: () => _onItemTapped(4),
               ),
             ],
           ),
         ),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation
-              .centerDocked,
-      floatingActionButton:
-          FloatingActionButton(
-        onPressed: () =>
-            Navigator.pushNamed(
-                context,
-                '/detect'),
-        backgroundColor:
-            AppTheme.primary,
-        child: const Icon(
-            Icons.camera_alt,
-            color: Colors.white),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/detect'),
+        backgroundColor: AppTheme.primary,
+        child: const Icon(Icons.camera_alt, color: Colors.white),
       ),
     );
   }
