@@ -54,8 +54,9 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
                 bool isUser = _messages[index]["role"] == "user";
 
                 return Align(
-                  alignment:
-                      isUser ? Alignment.centerRight : Alignment.centerLeft,
+                  alignment: isUser
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 5),
                     padding: const EdgeInsets.all(12),
@@ -89,10 +90,10 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
                 IconButton(
                   icon: const Icon(Icons.send, color: Colors.green),
                   onPressed: _sendMessage,
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
