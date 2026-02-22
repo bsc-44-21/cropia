@@ -38,8 +38,7 @@ class _DetectScreenState extends State<DetectScreen> {
       _severity = null;
     });
   }
-
-  @override
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Disease Detection')),

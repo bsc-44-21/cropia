@@ -9,6 +9,7 @@ import 'screens/tasks_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/auth/sign_in.dart';
 import 'screens/auth/sign_up.dart';
+import 'screens/get_started.dart';
 
 void main() {
   runApp(const CropiaApp());
@@ -37,7 +38,11 @@ class CropiaApp extends StatelessWidget {
       initialRoute: '/',
 
       routes: {
+<<<<<<< HEAD
         '/': (context) => const SignUpScreen(), // ✅ changed here
+=======
+        '/': (context) => const GetStartedScreen(),
+>>>>>>> 03b3af2a8931ddaf9cea780d598ab083c4e767e4
         '/home': (context) => const HomeScreen(),
         '/detect': (context) => const DetectScreen(),
         '/weather': (context) => const WeatherScreen(),
