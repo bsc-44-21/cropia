@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../theme.dart';
+import 'analyze_screen.dart';
 
 class DetectScreen extends StatefulWidget {
   const DetectScreen({super.key});
@@ -29,6 +31,30 @@ class _DetectScreenState extends State<DetectScreen> {
       _disease = 'Early Leaf Spot';
       _severity = 0.68;
     });
+  }
+
+  Future<void> _pickImageFromCamera() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      setState(() {
+        _image = File(photo.path);
+        _disease = null;
+        _severity = null;
+      });
+    }
+  }
+
+  Future<void> _pickImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _image = File(image.path);
+        _disease = null;
+        _severity = null;
+      });
+    }
   }
 
   void _clear() {
@@ -84,25 +110,16 @@ class _DetectScreenState extends State<DetectScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: hook camera
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Camera not implemented')),
-                    );
-                  },
+                  onPressed: _pickImageFromCamera,
                   icon: const Icon(Icons.camera_alt),
                   label: const Text('Camera'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.primary,
+                    foregroundColor: Colors.white,
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: hook gallery
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Gallery not implemented')),
-                    );
-                  },
+                  onPressed: _pickImageFromGallery,
                   icon: const Icon(Icons.upload_file),
                   label: const Text('Upload'),
                 ),
@@ -184,9 +201,18 @@ class _DetectScreenState extends State<DetectScreen> {
               )
             else
               ElevatedButton(
-                onPressed: _analyze,
+                onPressed: _image != null
+                    ? () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => AnalyzeScreen(image: _image!),
+                          ),
+                        );
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 child: const Text(
