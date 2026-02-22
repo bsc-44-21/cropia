@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
-import 'detect_screen.dart';
 import 'weather_screen.dart';
 import 'agribot_screen.dart';
 import 'community_screen.dart';
 
-// Add this new widget for the home content
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
 
@@ -16,7 +14,8 @@ class HomeContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Location and Temperature Card
+
+          // Location Card
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
@@ -30,11 +29,12 @@ class HomeContent extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.location_on, color: AppTheme.primary, size: 20),
+                    Icon(Icons.location_on,
+                        color: AppTheme.primary, size: 20),
                     const SizedBox(width: 4),
-                    Text(
+                    const Text(
                       'Zomba',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -55,19 +55,21 @@ class HomeContent extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-          // Search tool trending tips
+          // Search Bar
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
- decoration: BoxDecoration(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
               color: Colors.grey[100],
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Row(
               children: [
-                Icon(Icons.search, size: 20, color: Colors.grey),
+                Icon(Icons.search,
+                    size: 20, color: Colors.grey),
                 SizedBox(width: 8),
                 Text(
-                  'search tool trending tips',
+                  'Search tool trending tips',
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
@@ -79,84 +81,104 @@ class HomeContent extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-// Cropla Tools Section
+          // Cropia Tools header
           const Text(
-            'Cropla Tools',
+            'Cropia Tools',
             style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 15, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
+
+          // 🔲 2x2 Tools Grid
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 4,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
+            crossAxisCount: 2,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            childAspectRatio: 0.85,
             children: [
               _buildToolItem(
+                context,
                 icon: Icons.health_and_safety,
                 label: 'Disease Detector',
-                onTap: () => Navigator.pushNamed(context, '/detect'),
+                onTap: () =>
+                    Navigator.pushNamed(context, '/detect'),
               ),
               _buildToolItem(
+                context,
                 icon: Icons.smart_toy,
                 label: 'Agribot Assistant',
-                onTap: () => context.findAncestorStateOfType<_HomeScreenState>()?.onToolTap(3),
+                onTap: () => context
+                    .findAncestorStateOfType<_HomeScreenState>()
+                    ?.onToolTap(3),
               ),
               _buildToolItem(
+                context,
                 icon: Icons.cloud,
                 label: 'Weather Notifier',
-                onTap: () => context.findAncestorStateOfType<_HomeScreenState>()?.onToolTap(1),
+                onTap: () => context
+                    .findAncestorStateOfType<_HomeScreenState>()
+                    ?.onToolTap(1),
               ),
               _buildToolItem(
+                context,
                 icon: Icons.people,
                 label: 'Live Community',
-                onTap: () => context.findAncestorStateOfType<_HomeScreenState>()?.onToolTap(4),
+                onTap: () => context
+                    .findAncestorStateOfType<_HomeScreenState>()
+                    ?.onToolTap(4),
               ),
             ],
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 30),
 
-          // Trending Now Section
+          // 🔥 Trending Section
           const Text(
             'Trending Now',
             style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
           ),
+
           const SizedBox(height: 12),
-          Row(
-            children: [
-              _buildTrendingChip('Trending'),
-              const SizedBox(width: 8),
-              _buildTrendingChip('Trending'),
-              const SizedBox(width: 8),
-              _buildTrendingChip('Trending'),
-            ],
+
+          SizedBox(
+            height: 180,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              separatorBuilder: (_, __) =>
+                  const SizedBox(width: 12),
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  width: 140,
+                  child: _buildTrendingImage(),
+                );
+              },
+            ),
           ),
 
           const SizedBox(height: 24),
 
-          // Agricultural Tips Section
+          // Tips Section
           const Text(
             'Agricultural Tips',
             style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
           ),
+
           const SizedBox(height: 12),
+
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: _buildTipsColumn([
                   '1. In the morning',
-                  '2. After sun set',
+                  '2. After sunset',
                   '3. Take care',
                   '4. Use cool water',
                   '5. Not warm',
@@ -165,14 +187,50 @@ class HomeContent extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: _buildTipsColumn([
-                  '1. In the morning',
-                  '2. After sun set',
-                  '3. Take care',
-                  '4. Cold water',
-                  '5. Not warm',
-                  '6. You got this!',
-                ]),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[50],
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey[200]!),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'lib/assets/images/download.jpg',
+                          height: 90,
+                          width: 70,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              '1. In the morning',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(height: 6),
+                            const Text(
+                              '2. After sunset',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(height: 6),
+                            const Text(
+                              '3. Take care',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -181,60 +239,98 @@ class HomeContent extends StatelessWidget {
     );
   }
 
- Widget _buildToolItem({
+  Widget _buildToolItem(
+    BuildContext context, {
     required IconData icon,
     required String label,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: AppTheme.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppTheme.primary.withOpacity(0.12),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: AppTheme.primary, size: 28),
             ),
-            child: Icon(
-              icon,
-              color: AppTheme.primary,
-              size: 24,
+            const SizedBox(height: 10),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 10,
-            ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
-    );
-  }
-  Widget _buildTrendingChip(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppTheme.primary,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildTipsColumn(List<String> tips) {
+  Widget _buildTrendingImage() {
+    return Container(
+      margin: const EdgeInsets.only(right: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.12),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                'lib/assets/images/download.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.28),
+              ),
+            ),
+            Positioned(
+              top: 8,
+              left: 8,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  'Trending',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTipsColumn(
+      List<String> tips) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -244,100 +340,141 @@ class HomeContent extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: tips.map((tip) => Padding(
-          padding: const EdgeInsets.only(bottom: 6),
-          child: Text(
-            tip,
-            style: const TextStyle(fontSize: 13),
-          ),
-        )).toList(),
+        children: tips
+            .map((tip) => Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Text(
+                    tip,
+                    style: const TextStyle(fontSize: 13),
+                  ),
+                ))
+            .toList(),
       ),
     );
   }
 }
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() =>
+      _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState
+    extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = const [
-    HomeContent(), // Changed from placeholder to actual home content
+    HomeContent(),
     WeatherScreen(),
-    SizedBox.shrink(), // camera handled by FAB -> route
+    SizedBox.shrink(),
     AgriBotScreen(),
     CommunityScreen(),
   ];
 
   void _onItemTapped(int index) {
     if (index == 2) {
-      Navigator.pushNamed(context, '/detect');
+      Navigator.pushNamed(
+          context, '/detect');
       return;
     }
-    setState(() => _selectedIndex = index);
+    setState(() =>
+        _selectedIndex = index);
   }
 
-  // Helper method for tool navigation from HomeContent
   void onToolTap(int index) {
-    setState(() => _selectedIndex = index);
+    setState(() =>
+        _selectedIndex = index);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+      BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cropia', style: TextStyle(color: AppTheme.primary)),
-        centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor:
+            Colors.white,
         elevation: 0,
       ),
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+      bottomNavigationBar:
+          BottomAppBar(
+        shape:
+            const CircularNotchedRectangle(),
         notchMargin: 6.0,
         child: SizedBox(
           height: 60,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment:
+                MainAxisAlignment
+                    .spaceAround,
             children: [
               AppIconButton(
-                activeIcon: Icons.home,
-                inactiveIcon: Icons.home_outlined,
-                active: _selectedIndex == 0,
-                onPressed: () => _onItemTapped(0),
+                activeIcon:
+                    Icons.home,
+                inactiveIcon:
+                    Icons.home_outlined,
+                active:
+                    _selectedIndex ==
+                        0,
+                onPressed: () =>
+                    _onItemTapped(0),
               ),
               AppIconButton(
-                activeIcon: Icons.cloud,
-                inactiveIcon: Icons.cloud_outlined,
-                active: _selectedIndex == 1,
-                onPressed: () => _onItemTapped(1),
+                activeIcon:
+                    Icons.cloud,
+                inactiveIcon: Icons
+                    .cloud_outlined,
+                active:
+                    _selectedIndex ==
+                        1,
+                onPressed: () =>
+                    _onItemTapped(1),
               ),
-              const SizedBox(width: 48), // space for FAB
+              const SizedBox(
+                  width: 48),
               AppIconButton(
-                activeIcon: Icons.smart_toy,
-                inactiveIcon: Icons.smart_toy_outlined,
-                active: _selectedIndex == 3,
-                onPressed: () => _onItemTapped(3),
+                activeIcon: Icons
+                    .smart_toy,
+                inactiveIcon: Icons
+                    .smart_toy_outlined,
+                active:
+                    _selectedIndex ==
+                        3,
+                onPressed: () =>
+                    _onItemTapped(3),
               ),
               AppIconButton(
-                activeIcon: Icons.people,
-                inactiveIcon: Icons.people_outline,
-                active: _selectedIndex == 4,
-                onPressed: () => _onItemTapped(4),
+                activeIcon:
+                    Icons.people,
+                inactiveIcon: Icons
+                    .people_outline,
+                active:
+                    _selectedIndex ==
+                        4,
+                onPressed: () =>
+                    _onItemTapped(4),
               ),
             ],
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/detect'),
-        backgroundColor: AppTheme.primary,
-        child: const Icon(Icons.camera_alt, color: Colors.white),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation
+              .centerDocked,
+      floatingActionButton:
+          FloatingActionButton(
+        onPressed: () =>
+            Navigator.pushNamed(
+                context,
+                '/detect'),
+        backgroundColor:
+            AppTheme.primary,
+        child: const Icon(
+            Icons.camera_alt,
+            color: Colors.white),
       ),
     );
   }
