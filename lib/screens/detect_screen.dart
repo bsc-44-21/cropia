@@ -19,6 +19,7 @@ class _DetectScreenState extends State<DetectScreen> {
   double? _severity;
 
   // placeholder: simulate analyze
+  // ignore: unused_element
   Future<void> _analyze() async {
     setState(() {
       _analyzing = true;
@@ -64,7 +65,8 @@ class _DetectScreenState extends State<DetectScreen> {
       _severity = null;
     });
   }
-    @override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Disease Detection')),
