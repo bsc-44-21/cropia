@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const Color _creopiaGreen = Color(0xFF2E7D32);
+
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({super.key});
 
@@ -13,6 +15,24 @@ class WeatherScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Greeting Header
+              const Text(
+                'Weather Forecast 🌤️',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Plan your farming activities wisely',
+                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+              ),
+
+              const SizedBox(height: 20),
+              Divider(color: Colors.grey[300], height: 1),
+              const SizedBox(height: 20),
 
               /// TOP ROW (Temp + Location)
               Row(
@@ -23,7 +43,7 @@ class WeatherScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green[700],
+                      color: _creopiaGreen,
                     ),
                   ),
                   const Spacer(),
@@ -40,20 +60,65 @@ class WeatherScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        "Monday, 11 Feb",
+                        "Partly Cloudy",
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.grey[800],
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "Monday, 11 Feb",
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 24),
 
-                            /// 🌤 MODERN WEATHER ICON (Centered & Realistic) - KEPT INTACT
+              // Weather Alert Banner
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.orange.withOpacity(0.08),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.warning_amber_rounded,
+                      color: Colors.orange,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Rainy day expected. Plan harvest accordingly.',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.orange[900],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              /// 🌤 MODERN WEATHER ICON (Centered & Realistic) - KEPT INTACT
               Center(
                 child: SizedBox(
                   height: 200,
@@ -62,7 +127,6 @@ class WeatherScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     clipBehavior: Clip.none,
                     children: [
-
                       /// SUN WITH GLOW
                       Positioned(
                         top: 15,
@@ -83,20 +147,19 @@ class WeatherScreen extends StatelessWidget {
                                 color: Colors.orange.withOpacity(0.4),
                                 blurRadius: 25,
                                 spreadRadius: 5,
-                              )
+                              ),
                             ],
                           ),
                         ),
                       ),
- /// CLOUD
+
+                      /// CLOUD
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-
                           Stack(
                             alignment: Alignment.bottomCenter,
                             children: [
-
                               /// Cloud circles
                               Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -130,7 +193,7 @@ class WeatherScreen extends StatelessWidget {
                               _rainDrop(Colors.blue.shade400),
                               _rainDrop(Colors.blue.shade300),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ],
@@ -139,7 +202,8 @@ class WeatherScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 20),
-  /// WEATHER STATS
+
+              /// WEATHER STATS
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -161,32 +225,70 @@ class WeatherScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 28),
 
-              const Text(
-                "Weekly Updates",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+              // Divider
+              Divider(color: Colors.grey[300], height: 1),
+              const SizedBox(height: 20),
+
+              // Weekly Updates Header with See All
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Weekly Updates",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: const Size(0, 0),
+                    ),
+                    child: const Text(
+                      'See All',
+                      style: TextStyle(color: _creopiaGreen, fontSize: 13),
+                    ),
+                  ),
+                ],
               ),
 
-              const SizedBox(height: 15),
+              const SizedBox(height: 12),
 
               SizedBox(
                 height: 170,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    _WeeklyCard("26°", "11:19AM", weatherType: WeatherType.whiteWithSun),
+                    _WeeklyCard(
+                      "26°",
+                      "11:19AM",
+                      weatherType: WeatherType.whiteWithSun,
+                    ),
                     const SizedBox(width: 12),
-                    _WeeklyCard("22°", "12:00PM", weatherType: WeatherType.whiteCloudSun),
+                    _WeeklyCard(
+                      "22°",
+                      "12:00PM",
+                      weatherType: WeatherType.whiteCloudSun,
+                    ),
                     const SizedBox(width: 12),
-                    _WeeklyCard("21°", "14:00PM", weatherType: WeatherType.sunny),
+                    _WeeklyCard(
+                      "21°",
+                      "14:00PM",
+                      weatherType: WeatherType.sunny,
+                    ),
                     const SizedBox(width: 12),
-                    _WeeklyCard("24°", "06:30AM", weatherType: WeatherType.darkCloudWithRain),
+                    _WeeklyCard(
+                      "24°",
+                      "06:30AM",
+                      weatherType: WeatherType.darkCloudWithRain,
+                    ),
                     const SizedBox(width: 12),
-                    _WeeklyCard("29°", "10:30PM", weatherType: WeatherType.whiteWithSun),
+                    _WeeklyCard(
+                      "29°",
+                      "10:30PM",
+                      weatherType: WeatherType.whiteWithSun,
+                    ),
                   ],
                 ),
               ),
@@ -199,7 +301,7 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 
-/// Cloud Circle Builder
+  /// Cloud Circle Builder
   static Widget _cloudCircle(double size) {
     return Container(
       height: size,
@@ -215,11 +317,7 @@ class WeatherScreen extends StatelessWidget {
   static Widget _rainDrop(Color color) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: Icon(
-        Icons.grain,
-        color: color,
-        size: 20,
-      ),
+      child: Icon(Icons.grain, color: color, size: 20),
     );
   }
 }
@@ -238,47 +336,45 @@ class _WeatherInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(icon, color: Colors.blue, size: 28),
-        const SizedBox(height: 8),
-        Text(
-          value,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
           ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 13,
-            color: Colors.black54,
+        ],
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: _creopiaGreen, size: 28),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-        ),
-      ],
+          const SizedBox(height: 4),
+          Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+        ],
+      ),
     );
   }
 }
 
-enum WeatherType {
-  whiteWithSun,
-  whiteCloudSun,
-  sunny,
-  darkCloudWithRain,
-}
-  /// Weekly Card with different cloud types - Darker background
+enum WeatherType { whiteWithSun, whiteCloudSun, sunny, darkCloudWithRain }
+
+/// Weekly Card with different cloud types - Darker background
 class _WeeklyCard extends StatelessWidget {
   final String temp;
   final String time;
   final WeatherType weatherType;
 
-  const _WeeklyCard(
-    this.temp, 
-    this.time, {
-    required this.weatherType,
-  });
+  const _WeeklyCard(this.temp, this.time, {required this.weatherType});
 
   Widget _getWeatherIcon() {
     switch (weatherType) {
@@ -286,83 +382,47 @@ class _WeeklyCard extends StatelessWidget {
         return Stack(
           clipBehavior: Clip.none,
           children: [
-            Icon(
-              Icons.cloud,
-              size: 32,
-              color: Colors.grey[300],
-            ),
+            Icon(Icons.cloud, size: 32, color: Colors.grey[300]),
             Positioned(
               top: -8,
               right: -8,
-              child: Icon(
-                Icons.wb_sunny,
-                size: 18,
-                color: Colors.orange[400],
-              ),
+              child: Icon(Icons.wb_sunny, size: 18, color: Colors.orange[400]),
             ),
           ],
         );
-      
+
       case WeatherType.whiteCloudSun:
         return Stack(
           clipBehavior: Clip.none,
           children: [
-            Icon(
-              Icons.cloud,
-              size: 32,
-              color: Colors.grey[300],
-            ),
+            Icon(Icons.cloud, size: 32, color: Colors.grey[300]),
             Positioned(
               top: -5,
               left: -5,
-              child: Icon(
-                Icons.wb_sunny,
-                size: 16,
-                color: Colors.orange[300],
-              ),
+              child: Icon(Icons.wb_sunny, size: 16, color: Colors.orange[300]),
             ),
           ],
         );
-      
+
       case WeatherType.sunny:
-        return Icon(
-          Icons.wb_sunny,
-          size: 28,
-          color: Colors.orange[400],
-        );
-      
+        return Icon(Icons.wb_sunny, size: 28, color: Colors.orange[400]);
+
       case WeatherType.darkCloudWithRain:
         return Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: [
-            Icon(
-              Icons.cloud,
-              size: 32,
-              color: Colors.grey[700],
-            ),
+            Icon(Icons.cloud, size: 32, color: Colors.grey[700]),
             Positioned(
               bottom: -8,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.grain,
-                    size: 12,
-                    color: Colors.blue[500],
-                  ),
+                  Icon(Icons.grain, size: 12, color: Colors.blue[500]),
                   const SizedBox(width: 2),
-                  Icon(
-                    Icons.grain,
-                    size: 14,
-                    color: Colors.blue[400],
-                  ),
+                  Icon(Icons.grain, size: 14, color: Colors.blue[400]),
                   const SizedBox(width: 2),
-                  Icon(
-                    Icons.grain,
-                    size: 12,
-                    color: Colors.blue[500],
-                  ),
+                  Icon(Icons.grain, size: 12, color: Colors.blue[500]),
                 ],
               ),
             ),
@@ -377,19 +437,16 @@ class _WeeklyCard extends StatelessWidget {
       width: 100,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFD3D3D3), // Much darker background (Light Gray)
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(
-          color: Colors.grey.withOpacity(0.2),
-          width: 1,
-        ),
+        border: Border.all(color: _creopiaGreen.withOpacity(0.2), width: 1),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -399,7 +456,7 @@ class _WeeklyCard extends StatelessWidget {
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
-              color: Colors.black,
+              color: _creopiaGreen,
             ),
           ),
           const SizedBox(height: 8),
@@ -407,9 +464,9 @@ class _WeeklyCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             time,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 11,
-              color: Colors.black87, // Darker text for better contrast
+              color: Colors.grey[700],
               fontWeight: FontWeight.w500,
             ),
           ),

@@ -19,7 +19,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
         "user": "Farmer",
         "content": text,
         "comments": <Map<String, String>>[],
-        "likes": 0
+        "likes": 0,
       });
     });
 
@@ -30,10 +30,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
     if (comment.trim().isEmpty) return;
 
     setState(() {
-      posts[index]["comments"].add({
-        "user": "Member",
-        "text": comment,
-      });
+      posts[index]["comments"].add({"user": "Member", "text": comment});
     });
   }
 
@@ -70,7 +67,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 ElevatedButton(
                   onPressed: () => addPost(postController.text),
                   child: const Text("Post"),
-                )
+                ),
               ],
             ),
           ),
@@ -94,7 +91,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
                         Text(
                           post["user"],
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Text(post["content"]),
@@ -119,8 +118,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: Text(
                               "${c["user"]}: ${c["text"]}",
-                              style:
-                                  const TextStyle(color: Colors.black87),
+                              style: const TextStyle(color: Colors.black87),
                             ),
                           );
                         }).toList(),
@@ -139,20 +137,19 @@ class _CommunityScreenState extends State<CommunityScreen> {
                             IconButton(
                               icon: const Icon(Icons.send),
                               onPressed: () {
-                                addComment(
-                                    index, commentController.text);
+                                addComment(index, commentController.text);
                                 commentController.clear();
                               },
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );
