@@ -409,22 +409,33 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.pushNamed(context, '/detect');
       return;
     }
+    if (index == 3) {
+      Navigator.pushNamed(context, '/agribot');
+      return;
+    }
+    if (index == 4) {
+      Navigator.pushNamed(context, '/community');
+      return;
+    }
     setState(() => _selectedIndex = index);
   }
 
   void onToolTap(int index) {
+    if (index == 3) {
+      Navigator.pushNamed(context, '/agribot');
+      return;
+    }
+    if (index == 4) {
+      Navigator.pushNamed(context, '/community');
+      return;
+    }
     setState(() => _selectedIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
-      body: _pages[_selectedIndex],
+      body: SafeArea(child: _pages[_selectedIndex]),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 6.0,

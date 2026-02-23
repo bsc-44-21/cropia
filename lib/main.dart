@@ -11,6 +11,9 @@ import 'screens/auth/sign_in.dart';
 import 'screens/auth/sign_up.dart';
 import 'screens/get_started.dart';
 
+// Global notifier for theme switching
+final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
+
 void main() {
   runApp(const CropiaApp());
 }
@@ -20,34 +23,50 @@ class CropiaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cropia',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.primary),
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0,
-        ),
-        scaffoldBackgroundColor: Colors.white,
-      ),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (_, ThemeMode currentMode, __) {
+        return MaterialApp(
+          title: 'Cropia',
+          debugShowCheckedModeBanner: false,
+          themeMode: currentMode,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.primary),
+            useMaterial3: true,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              elevation: 0,
+            ),
+            scaffoldBackgroundColor: Colors.white,
+          ),
+          darkTheme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: AppTheme.primary,
+              brightness: Brightness.dark,
+            ),
+            useMaterial3: true,
+            appBarTheme: const AppBarTheme(
+              elevation: 0,
+            ),
+          ),
 
-      // 👇 App will start with GetStartedScreen
-      initialRoute: '/',
+          // 👇 App will start with GetStartedScreen
+          initialRoute: '/',
 
-      routes: {
-        '/': (context) => const GetStartedScreen(),
-        '/home': (context) => const HomeScreen(),
-        '/detect': (context) => const DetectScreen(),
-        '/weather': (context) => const WeatherScreen(),
-        '/agribot': (context) => const AgriBotScreen(),
-        '/community': (context) => const CommunityScreen(),
-        '/tasks': (context) => const TasksScreen(),
-        '/profile': (context) => const ProfileScreen(),
-        '/signin': (context) => const SignInScreen(),
-        '/signup': (context) => const SignUpScreen(),
+          routes: {
+            '/': (context) => const GetStartedScreen(),
+            '/home': (context) => const HomeScreen(),
+            '/detect': (context) => const DetectScreen(),
+            '/weather': (context) => const WeatherScreen(),
+            '/agribot': (context) => const AgriBotScreen(),
+            '/community': (context) => const CommunityScreen(),
+            '/tasks': (context) => const TasksScreen(),
+            '/profile': (context) => const ProfileScreen(),
+            '/signin': (context) => const SignInScreen(),
+            '/signup': (context) => const SignUpScreen(),
+          },
+        );
       },
     );
   }

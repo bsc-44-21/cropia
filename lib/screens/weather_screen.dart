@@ -7,11 +7,8 @@ class WeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfff4f4f4),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(top: 8, left: 20, right: 20, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -296,8 +293,6 @@ class WeatherScreen extends StatelessWidget {
               const SizedBox(height: 25),
             ],
           ),
-        ),
-      ),
     );
   }
 
