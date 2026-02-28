@@ -395,25 +395,33 @@ class _CommunityScreenState extends State<CommunityScreen> {
               height: 200,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.05),
+                color: isDark ? Colors.grey[800] : Colors.grey[100],
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppTheme.primary.withOpacity(0.1)),
+                border: Border.all(color: isDark ? Colors.grey[700]! : Colors.grey[300]!),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    post["media"] == "video" ? Icons.play_circle_outline : Icons.image_outlined,
-                    size: 60,
-                    color: AppTheme.primary,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    post["media"] == "video" ? "Simulated Video Content" : "Simulated Photo Content",
-                    style: const TextStyle(color: AppTheme.primary, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+              child: post["media"].toString().endsWith('.jpg')
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        'lib/assets/images/${post["media"]}',
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          post["media"] == "video" ? Icons.play_circle_outline : Icons.image_outlined,
+                          size: 60,
+                          color: AppTheme.primary,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          post["media"] == "video" ? "Simulated Video Content" : "Simulated Photo Content",
+                          style: const TextStyle(color: AppTheme.primary, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
             ),
           ],
           const SizedBox(height: 12),
