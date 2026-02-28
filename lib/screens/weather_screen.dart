@@ -9,296 +9,307 @@ class WeatherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.only(top: 8, left: 20, right: 20, bottom: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Greeting Header
-              Text(
-                'Weather Forecast 🌤️',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : Colors.black87,
-                ),
+    return Scaffold(
+      backgroundColor: isDark ? Colors.black : const Color(0xFFF8FAF8),
+      appBar: AppBar(
+        title: const Text(
+          'Weather Forecast',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: isDark ? Colors.grey[900] : Colors.white,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Forecast for Today 🌤️',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : Colors.black87,
               ),
-              const SizedBox(height: 4),
-              Text(
-                'Plan your farming activities wisely',
-                style: TextStyle(fontSize: 13, color: isDark ? Colors.grey[400] : Colors.grey[600]),
-              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Plan your farming activities wisely',
+              style: TextStyle(fontSize: 13, color: isDark ? Colors.grey[400] : Colors.grey[600]),
+            ),
 
-              const SizedBox(height: 20),
-              Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
-              const SizedBox(height: 20),
+            const SizedBox(height: 20),
+            Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
+            const SizedBox(height: 20),
 
-              /// TOP ROW (Temp + Location)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "23°",
-                    style: TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                      color: _creopiaGreen,
-                    ),
+            /// TOP ROW (Temp + Location)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "23°",
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: _creopiaGreen,
                   ),
-                  const Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Chikanda, Zomba",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          color: isDark ? Colors.white : Colors.black,
-                        ),
+                ),
+                const Spacer(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Chikanda, Zomba",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: isDark ? Colors.white : Colors.black,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "Partly Cloudy",
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: isDark ? Colors.grey[400] : Colors.grey[700],
-                          fontWeight: FontWeight.w500,
-                        ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Partly Cloudy",
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: isDark ? Colors.grey[400] : Colors.grey[700],
+                        fontWeight: FontWeight.w500,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "Monday, 11 Feb",
-                        style: TextStyle(fontSize: 12, color: isDark ? Colors.grey[500] : Colors.grey[600]),
-                      ),
-                    ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Monday, 11 Feb",
+                      style: TextStyle(fontSize: 12, color: isDark ? Colors.grey[500] : Colors.grey[600]),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 24),
+
+            // Weather Alert Banner
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.orange.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.orange.withOpacity(0.08),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
-
-              const SizedBox(height: 24),
-
-              // Weather Alert Banner
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.orange.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.orange.withOpacity(0.3)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.orange.withOpacity(0.08),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.warning_amber_rounded,
+                    color: Colors.orange,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Rainy day expected. Plan harvest accordingly.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isDark ? Colors.orange[200] : Colors.orange[900],
+                      ),
                     ),
-                  ],
-                ),
-                child: Row(
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            /// 🌤 MODERN WEATHER ICON (Centered & Realistic) - KEPT INTACT
+            Center(
+              child: SizedBox(
+                height: 200,
+                width: 220,
+                child: Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
                   children: [
-                    const Icon(
-                      Icons.warning_amber_rounded,
-                      color: Colors.orange,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        'Rainy day expected. Plan harvest accordingly.',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: isDark ? Colors.orange[200] : Colors.orange[900],
+                    /// SUN WITH GLOW
+                    Positioned(
+                      top: 15,
+                      left: 45,
+                      child: Container(
+                        height: 90,
+                        width: 90,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: RadialGradient(
+                            colors: [
+                              Colors.orange.shade300,
+                              Colors.orange.shade500,
+                            ],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.orange.withOpacity(0.4),
+                              blurRadius: 25,
+                              spreadRadius: 5,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
 
-              const SizedBox(height: 24),
-
-              /// 🌤 MODERN WEATHER ICON (Centered & Realistic) - KEPT INTACT
-              Center(
-                child: SizedBox(
-                  height: 200,
-                  width: 220,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    clipBehavior: Clip.none,
-                    children: [
-                      /// SUN WITH GLOW
-                      Positioned(
-                        top: 15,
-                        left: 45,
-                        child: Container(
-                          height: 90,
-                          width: 90,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: RadialGradient(
-                              colors: [
-                                Colors.orange.shade300,
-                                Colors.orange.shade500,
+                    /// CLOUD
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            /// Cloud circles
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _cloudCircle(60),
+                                _cloudCircle(85),
+                                _cloudCircle(65),
                               ],
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.orange.withOpacity(0.4),
-                                blurRadius: 25,
-                                spreadRadius: 5,
+
+                            /// Base cloud
+                            Container(
+                              height: 50,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade800,
+                                borderRadius: BorderRadius.circular(30),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ),
 
-                      /// CLOUD
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              /// Cloud circles
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  _cloudCircle(60),
-                                  _cloudCircle(85),
-                                  _cloudCircle(65),
-                                ],
-                              ),
+                        const SizedBox(height: 10),
 
-                              /// Base cloud
-                              Container(
-                                height: 50,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade800,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 10),
-
-                          /// RAIN DROPS
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _rainDrop(Colors.blue.shade400),
-                              _rainDrop(Colors.blue.shade500),
-                              _rainDrop(Colors.blue.shade400),
-                              _rainDrop(Colors.blue.shade300),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              /// WEATHER STATS
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  _WeatherInfo(
-                    icon: Icons.air,
-                    value: "15 km",
-                    label: "Wind now",
-                  ),
-                  _WeatherInfo(
-                    icon: Icons.water_drop,
-                    value: "46%",
-                    label: "Humidity",
-                  ),
-                  _WeatherInfo(
-                    icon: Icons.umbrella,
-                    value: "87%",
-                    label: "Precipitation",
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 28),
-
-              // Divider
-              Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
-              const SizedBox(height: 20),
-
-              // Weekly Updates Header with See All
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Weekly Updates",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                      fontSize: 18,
-                      color: isDark ? Colors.white : Colors.black,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: const Size(0, 0),
-                    ),
-                    child: const Text(
-                      'See All',
-                      style: TextStyle(color: _creopiaGreen, fontSize: 13),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 12),
-
-              SizedBox(
-                height: 170,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _WeeklyCard(
-                      "26°",
-                      "11:19AM",
-                      weatherType: WeatherType.whiteWithSun,
-                    ),
-                    const SizedBox(width: 12),
-                    _WeeklyCard(
-                      "22°",
-                      "12:00PM",
-                      weatherType: WeatherType.whiteCloudSun,
-                    ),
-                    const SizedBox(width: 12),
-                    _WeeklyCard(
-                      "21°",
-                      "14:00PM",
-                      weatherType: WeatherType.sunny,
-                    ),
-                    const SizedBox(width: 12),
-                    _WeeklyCard(
-                      "24°",
-                      "06:30AM",
-                      weatherType: WeatherType.darkCloudWithRain,
-                    ),
-                    const SizedBox(width: 12),
-                    _WeeklyCard(
-                      "29°",
-                      "10:30PM",
-                      weatherType: WeatherType.whiteWithSun,
+                        /// RAIN DROPS
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _rainDrop(Colors.blue.shade400),
+                            _rainDrop(Colors.blue.shade500),
+                            _rainDrop(Colors.blue.shade400),
+                            _rainDrop(Colors.blue.shade300),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
+            ),
 
-              const SizedBox(height: 25),
-            ],
-          ),
+            const SizedBox(height: 20),
+
+            /// WEATHER STATS
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                _WeatherInfo(
+                  icon: Icons.air,
+                  value: "15 km",
+                  label: "Wind now",
+                ),
+                _WeatherInfo(
+                  icon: Icons.water_drop,
+                  value: "46%",
+                  label: "Humidity",
+                ),
+                _WeatherInfo(
+                  icon: Icons.umbrella,
+                  value: "87%",
+                  label: "Precipitation",
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 28),
+
+            // Divider
+            Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
+            const SizedBox(height: 20),
+
+            // Weekly Updates Header with See All
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Weekly Updates",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold, 
+                    fontSize: 18,
+                    color: isDark ? Colors.white : Colors.black,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: const Size(0, 0),
+                  ),
+                  child: const Text(
+                    'See All',
+                    style: TextStyle(color: _creopiaGreen, fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            SizedBox(
+              height: 170,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _WeeklyCard(
+                    "26°",
+                    "11:19AM",
+                    weatherType: WeatherType.whiteWithSun,
+                  ),
+                  const SizedBox(width: 12),
+                  _WeeklyCard(
+                    "22°",
+                    "12:00PM",
+                    weatherType: WeatherType.whiteCloudSun,
+                  ),
+                  const SizedBox(width: 12),
+                  _WeeklyCard(
+                    "21°",
+                    "14:00PM",
+                    weatherType: WeatherType.sunny,
+                  ),
+                  const SizedBox(width: 12),
+                  _WeeklyCard(
+                    "24°",
+                    "06:30AM",
+                    weatherType: WeatherType.darkCloudWithRain,
+                  ),
+                  const SizedBox(width: 12),
+                  _WeeklyCard(
+                    "29°",
+                    "10:30PM",
+                    weatherType: WeatherType.whiteWithSun,
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 25),
+          ],
+        ),
+      ),
     );
   }
 

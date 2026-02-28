@@ -465,13 +465,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = const [
     HomeContent(),
-    WeatherScreen(),
-    SizedBox.shrink(),
+    SizedBox.shrink(), // Placeholder for Weather
+    SizedBox.shrink(), // Placeholder for Detect
     AgriBotScreen(),
     CommunityScreen(),
   ];
 
   void _onItemTapped(int index) {
+    if (index == 1) {
+      Navigator.pushNamed(context, '/weather');
+      return;
+    }
     if (index == 2) {
       Navigator.pushNamed(context, '/detect');
       return;
@@ -488,6 +492,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onToolTap(int index) {
+    if (index == 1) {
+      Navigator.pushNamed(context, '/weather');
+      return;
+    }
     if (index == 3) {
       Navigator.pushNamed(context, '/agribot');
       return;
