@@ -139,10 +139,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
         surfaceTintColor: Colors.transparent,
         actions: [
           IconButton(
-            icon: Icon(Icons.search, color: isDark ? Colors.white : Colors.black),
-            onPressed: () {},
-          ),
-          IconButton(
             icon: Icon(Icons.person_outline, color: isDark ? Colors.white : Colors.black),
             onPressed: () => Navigator.pushNamed(context, '/profile'),
           ),
