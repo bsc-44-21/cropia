@@ -316,7 +316,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
         children: [
           Icon(icon, color: color, size: 20),
           const SizedBox(width: 4),
-          Text(label, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+          Text(label, style: TextStyle(
+            fontWeight: FontWeight.w500, 
+            fontSize: 13,
+            color: Theme.of(context).brightness == Brightness.dark ? Colors.grey[300] : Colors.black87,
+          )),
         ],
       ),
     );
@@ -348,7 +352,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       children: [
                         Text(
                           post["user"],
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, 
+                            fontSize: 15,
+                            color: isDark ? Colors.white : Colors.black,
+                          ),
                         ),
                         if (post["isVerified"])
                           const Padding(
@@ -383,7 +391,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
           const SizedBox(height: 12),
           Text(
             post["content"],
-            style: const TextStyle(fontSize: 15, height: 1.4),
+            style: TextStyle(
+              fontSize: 15, 
+              height: 1.4,
+              color: isDark ? Colors.grey[300] : Colors.black,
+            ),
           ),
           if (post["media"] != null) ...[
             const SizedBox(height: 12),

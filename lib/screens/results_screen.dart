@@ -15,9 +15,9 @@ class ResultsScreen extends StatelessWidget {
     : super(key: key);
 
   Color _riskColor(double risk) {
-    if (risk >= 0.75) return Colors.red.shade600;
-    if (risk >= 0.4) return Colors.orange.shade600;
-    return Colors.green.shade600;
+    if (risk >= 0.75) return Colors.red.shade700;
+    if (risk >= 0.4) return Colors.orange.shade700;
+    return Colors.green.shade700;
   }
 
   @override
@@ -30,7 +30,10 @@ class ResultsScreen extends StatelessWidget {
         (analysis['chemicals'] as List<dynamic>?)?.cast<String>() ?? [];
     final risk = (analysis['risk'] as double?) ?? 0.0;
 
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark ? Colors.black : const Color(0xFFF8FAF8),
       appBar: AppBar(title: const Text('Results')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -77,39 +80,84 @@ class ResultsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Signs & Symptoms',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             ...signs.map(
               (s) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: Text('- $s'),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('• ', style: TextStyle(color: AppTheme.primary, fontWeight: FontWeight.bold)),
+                    Expanded(
+                      child: Text(
+                        s,
+                        style: TextStyle(fontSize: 14, color: isDark ? Colors.grey[400] : Colors.black54),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Prevention Measures',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             ...prevention.map(
               (p) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: Text('- $p'),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('• ', style: TextStyle(color: AppTheme.primary, fontWeight: FontWeight.bold)),
+                    Expanded(
+                      child: Text(
+                        p,
+                        style: TextStyle(fontSize: 14, color: isDark ? Colors.grey[400] : Colors.black54),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Recommended Chemicals',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             ...chemicals.map(
               (c) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: Text('- $c'),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('• ', style: TextStyle(color: AppTheme.primary, fontWeight: FontWeight.bold)),
+                    Expanded(
+                      child: Text(
+                        c,
+                        style: TextStyle(fontSize: 14, color: isDark ? Colors.grey[400] : Colors.black54),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 18),

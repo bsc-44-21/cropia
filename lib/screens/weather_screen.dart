@@ -7,28 +7,30 @@ class WeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.only(top: 8, left: 20, right: 20, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Greeting Header
-              const Text(
+              Text(
                 'Weather Forecast 🌤️',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: isDark ? Colors.white : Colors.black87,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 'Plan your farming activities wisely',
-                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                style: TextStyle(fontSize: 13, color: isDark ? Colors.grey[400] : Colors.grey[600]),
               ),
 
               const SizedBox(height: 20),
-              Divider(color: Colors.grey[300], height: 1),
+              Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
               const SizedBox(height: 20),
 
               /// TOP ROW (Temp + Location)
@@ -47,12 +49,12 @@ class WeatherScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
+                      Text(
                         "Chikanda, Zomba",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          color: Colors.black,
+                          color: isDark ? Colors.white : Colors.black,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -60,14 +62,14 @@ class WeatherScreen extends StatelessWidget {
                         "Partly Cloudy",
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.grey[700],
+                          color: isDark ? Colors.grey[400] : Colors.grey[700],
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         "Monday, 11 Feb",
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        style: TextStyle(fontSize: 12, color: isDark ? Colors.grey[500] : Colors.grey[600]),
                       ),
                     ],
                   ),
@@ -105,7 +107,7 @@ class WeatherScreen extends StatelessWidget {
                         'Rainy day expected. Plan harvest accordingly.',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.orange[900],
+                          color: isDark ? Colors.orange[200] : Colors.orange[900],
                         ),
                       ),
                     ),
@@ -225,16 +227,20 @@ class WeatherScreen extends StatelessWidget {
               const SizedBox(height: 28),
 
               // Divider
-              Divider(color: Colors.grey[300], height: 1),
+              Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
               const SizedBox(height: 20),
 
               // Weekly Updates Header with See All
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     "Weekly Updates",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                      fontSize: 18,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {},
@@ -331,19 +337,21 @@ class _WeatherInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? Colors.grey[900] : Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withOpacity(isDark ? 0.3 : 0.08),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
         ],
-        border: Border.all(color: Colors.grey[200]!),
+        border: Border.all(color: isDark ? Colors.grey[800]! : Colors.grey[200]!),
       ),
       child: Column(
         children: [
@@ -351,10 +359,14 @@ class _WeatherInfo extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(
+              fontWeight: FontWeight.bold, 
+              fontSize: 16,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           ),
           const SizedBox(height: 4),
-          Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+          Text(label, style: TextStyle(fontSize: 12, color: isDark ? Colors.grey[400] : Colors.grey[600])),
         ],
       ),
     );
@@ -428,20 +440,22 @@ class _WeeklyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: 100,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? Colors.grey[900] : Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(isDark ? 0.3 : 0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(color: _creopiaGreen.withOpacity(0.2), width: 1),
+        border: Border.all(color: isDark ? Colors.grey[800]! : _creopiaGreen.withOpacity(0.2), width: 1),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -461,7 +475,7 @@ class _WeeklyCard extends StatelessWidget {
             time,
             style: TextStyle(
               fontSize: 11,
-              color: Colors.grey[700],
+              color: isDark ? Colors.grey[400] : Colors.grey[700],
               fontWeight: FontWeight.w500,
             ),
           ),

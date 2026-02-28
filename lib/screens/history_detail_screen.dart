@@ -19,13 +19,16 @@ class HistoryDetailScreen extends StatelessWidget {
     final risk = (historyData['risk'] as double?) ?? 0.0;
     final imageName = historyData['imageName'] as String? ?? 'Disease 1.jpg';
 
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     Color _riskColor(double risk) {
-      if (risk >= 0.75) return Colors.red.shade600;
-      if (risk >= 0.4) return Colors.orange.shade600;
-      return Colors.green.shade600;
+      if (risk >= 0.75) return Colors.red.shade700;
+      if (risk >= 0.4) return Colors.orange.shade700;
+      return Colors.green.shade700;
     }
 
     return Scaffold(
+      backgroundColor: isDark ? Colors.black : const Color(0xFFF8FAF8),
       appBar: AppBar(
         title: const Text('History Details'),
         leading: IconButton(
@@ -94,17 +97,17 @@ class HistoryDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            _buildSectionHeader('Signs & Symptoms'),
+            _buildSectionHeader('Signs & Symptoms', isDark),
             const SizedBox(height: 8),
-            ...signs.map((s) => _buildListItem(s)),
+            ...signs.map((s) => _buildListItem(s, isDark)),
             const SizedBox(height: 20),
-            _buildSectionHeader('Prevention Measures'),
+            _buildSectionHeader('Prevention Measures', isDark),
             const SizedBox(height: 8),
-            ...prevention.map((p) => _buildListItem(p)),
+            ...prevention.map((p) => _buildListItem(p, isDark)),
             const SizedBox(height: 20),
-            _buildSectionHeader('Recommended Chemicals'),
+            _buildSectionHeader('Recommended Chemicals', isDark),
             const SizedBox(height: 8),
-            ...chemicals.map((c) => _buildListItem(c)),
+            ...chemicals.map((c) => _buildListItem(c, isDark)),
             const SizedBox(height: 30),
             ElevatedButton.icon(
               onPressed: () {
@@ -139,18 +142,18 @@ class HistoryDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(String title, bool isDark) {
     return Text(
       title,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: Colors.black87,
+        color: isDark ? Colors.white : Colors.black87,
       ),
     );
   }
 
-  Widget _buildListItem(String text) {
+  Widget _buildListItem(String text, bool isDark) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
@@ -160,7 +163,7 @@ class HistoryDetailScreen extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(fontSize: 14, color: Colors.black54),
+              style: TextStyle(fontSize: 14, color: isDark ? Colors.grey[400] : Colors.black54),
             ),
           ),
         ],

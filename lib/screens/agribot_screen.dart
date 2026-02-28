@@ -64,8 +64,10 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAF8),
+      backgroundColor: isDark ? Colors.black : const Color(0xFFF8FAF8),
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,13 +89,13 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
                 const SizedBox(width: 4),
                 Text(
                   "Online & Ready to Help",
-                  style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                  style: TextStyle(fontSize: 11, color: isDark ? Colors.grey[400] : Colors.grey[600]),
                 ),
               ],
             ),
           ],
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.grey[900] : Colors.white,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         actions: [
@@ -105,7 +107,7 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
       ),
       body: Column(
         children: [
-          const Divider(height: 1),
+          Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
@@ -155,12 +157,16 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
         Text(
           "Ask me anything about your crops,\nweather, or farming techniques.",
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+          style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.grey[400] : Colors.grey[600]),
         ),
         const SizedBox(height: 32),
-        const Text(
+        Text(
           "Quick Suggestions",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black54),
+          style: TextStyle(
+            fontSize: 14, 
+            fontWeight: FontWeight.bold, 
+            color: Theme.of(context).brightness == Brightness.dark ? Colors.grey[400] : Colors.black54,
+          ),
         ),
         const SizedBox(height: 16),
         Wrap(
@@ -170,7 +176,7 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
           children: _quickSuggestions
               .map((s) => ActionChip(
                     label: Text(s, style: const TextStyle(fontSize: 13)),
-                    backgroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).brightness == Brightness.dark ? Colors.grey[900] : Colors.white,
                     side: BorderSide(color: AppTheme.primary.withOpacity(0.2)),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                     onPressed: () => _sendMessage(s),
@@ -205,7 +211,7 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    color: isUser ? AppTheme.primary : Colors.white,
+                    color: isUser ? AppTheme.primary : (Theme.of(context).brightness == Brightness.dark ? Colors.grey[900] : Colors.white),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.05),
@@ -223,7 +229,7 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
                   child: Text(
                     text,
                     style: TextStyle(
-                      color: isUser ? Colors.white : Colors.black87,
+                      color: isUser ? Colors.white : (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
                       fontSize: 15,
                     ),
                   ),
@@ -258,7 +264,7 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).brightness == Brightness.dark ? Colors.grey[900] : Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
             child: const _AnimatedTypingDots(),
@@ -272,7 +278,7 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).brightness == Brightness.dark ? Colors.grey[900] : Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -288,7 +294,7 @@ class _AgriBotScreenState extends State<AgriBotScreen> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: Theme.of(context).brightness == Brightness.dark ? Colors.grey[800] : Colors.grey[100],
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Row(

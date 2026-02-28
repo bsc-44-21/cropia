@@ -9,24 +9,26 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Greeting
-          const Text(
+          Text(
             'Hello, Mr.Luwiji! 👋',
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              color: isDark ? Colors.white : Colors.black87,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             'Welcome back. Here\'s your farm dashboard',
-            style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+            style: TextStyle(fontSize: 13, color: isDark ? Colors.grey[400] : Colors.grey[600]),
           ),
 
           const SizedBox(height: 20),
@@ -36,12 +38,12 @@ class HomeContent extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppTheme.primary.withOpacity(0.1),
+              color: AppTheme.primary.withOpacity(isDark ? 0.2 : 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppTheme.primary.withOpacity(0.3)),
+              border: Border.all(color: AppTheme.primary.withOpacity(isDark ? 0.4 : 0.3)),
               boxShadow: [
                 BoxShadow(
-                  color: AppTheme.primary.withOpacity(0.1),
+                  color: Colors.black.withOpacity(isDark ? 0.2 : 0.05),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
@@ -69,7 +71,7 @@ class HomeContent extends StatelessWidget {
                     const SizedBox(width: 8),
                     Text(
                       '26 °C',
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                      style: TextStyle(fontSize: 16, color: isDark ? Colors.grey[300] : Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -78,13 +80,17 @@ class HomeContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 24),
-          Divider(color: Colors.grey[300], height: 1),
+          Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
           const SizedBox(height: 20),
 
           // Cropia Tools header
-          const Text(
+          Text(
             'Cropia Tools',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 15, 
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           ),
           const SizedBox(height: 12),
 
@@ -131,16 +137,20 @@ class HomeContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 24),
-          Divider(color: Colors.grey[300], height: 1),
+          Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
           const SizedBox(height: 20),
 
           // 🔥 Trending Section
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Trending Now',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : Colors.black,
+                ),
               ),
               TextButton(
                 onPressed: () {},
@@ -167,23 +177,27 @@ class HomeContent extends StatelessWidget {
               itemBuilder: (context, index) {
                 return SizedBox(
                   width: 140,
-                  child: _buildTrendingImage(index: index),
+                  child: _buildTrendingImage(context, index: index),
                 );
               },
             ),
           ),
 
           const SizedBox(height: 24),
-          Divider(color: Colors.grey[300], height: 1),
+          Divider(color: isDark ? Colors.grey[800] : Colors.grey[300], height: 1),
           const SizedBox(height: 20),
 
           // Tips Section
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Last Detects',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : Colors.black,
+                ),
               ),
               TextButton(
                 onPressed: () {},
@@ -251,36 +265,45 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildToolItem(
-    BuildContext context, {
-    required IconData icon,
-    required String label,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
+  Widget _buildToolItem(BuildContext context,
+      {required IconData icon, required String label, required VoidCallback onTap}) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: isDark ? Colors.grey[900] : Colors.white,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: isDark ? Colors.grey[800]! : Colors.grey[200]!),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.12),
+                color: AppTheme.primary.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: AppTheme.primary, size: 22),
+              child: Icon(icon, color: AppTheme.primary, size: 24),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Text(
               label,
+              style: TextStyle(
+                fontSize: 12, 
+                fontWeight: FontWeight.w600,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -288,8 +311,11 @@ class HomeContent extends StatelessWidget {
     );
   }
 
+
   Widget _buildHistoryCard(BuildContext context, Map<String, dynamic> data) {
-    return GestureDetector(
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
@@ -300,66 +326,74 @@ class HomeContent extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.grey[50],
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey[200]!),
+          color: isDark ? Colors.grey[900] : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: isDark ? Colors.grey[800]! : Colors.grey[100]!),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
+              color: Colors.black.withOpacity(isDark ? 0.2 : 0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                'lib/assets/images/${data['imageName']}',
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 16),
             Expanded(
-              flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     data['disease'],
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
+                    style: TextStyle(
+                      fontSize: 16, 
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : Colors.black87,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    data['description'],
-                    style: TextStyle(fontSize: 11, color: Colors.grey[600]),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                    'Detected on ${data['date']}',
+                    style: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[500], fontSize: 13),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Detected: ${data['date']}',
-                    style: TextStyle(fontSize: 10, color: AppTheme.primary, fontWeight: FontWeight.bold),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      'Risk: ${(data['risk'] * 100).round()}%',
+                      style: const TextStyle(
+                        color: AppTheme.primary,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: 10),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                'lib/assets/images/${data['imageName']}',
-                height: 70,
-                width: 60,
-                fit: BoxFit.cover,
-              ),
-            ),
+            Icon(Icons.chevron_right, color: Colors.grey[400]),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTrendingImage({int index = 0}) {
+  Widget _buildTrendingImage(BuildContext context, {required int index}) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
     final diseases = [
       'Disease 1.jpg',
       'Disease 2.jpg',
@@ -371,9 +405,10 @@ class HomeContent extends StatelessWidget {
       margin: const EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: isDark ? Colors.grey[800]! : Colors.grey[200]!),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.12),
+            color: Colors.black.withOpacity(isDark ? 0.3 : 0.12),
             blurRadius: 6,
             offset: const Offset(0, 3),
           ),
