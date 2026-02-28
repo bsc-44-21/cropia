@@ -116,7 +116,10 @@ class HistoryDetailScreen extends StatelessWidget {
                 Navigator.pushNamed(
                   context, 
                   '/community',
-                  arguments: {'sharedText': shareText},
+                  arguments: {
+                    'sharedText': shareText,
+                    'sharedImage': imageName,
+                  },
                 );
               },
               icon: const Icon(Icons.share),

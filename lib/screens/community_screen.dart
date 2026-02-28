@@ -50,10 +50,17 @@ class _CommunityScreenState extends State<CommunityScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-      if (args != null && args.containsKey('sharedText')) {
-        setState(() {
-          postController.text = args['sharedText'];
-        });
+      if (args != null) {
+        if (args.containsKey('sharedText')) {
+          setState(() {
+            postController.text = args['sharedText'];
+          });
+        }
+        if (args.containsKey('sharedImage')) {
+          setState(() {
+            _attachedMedia = args['sharedImage'];
+          });
+        }
       }
     });
   }
@@ -227,30 +234,54 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       border: InputBorder.none,
                       isDense: true,
                     ),
+                    minLines: 3,
+                    maxLines: null,
                     onSubmitted: (val) => addPost(val),
                   ),
                 ),
               ),
+              const SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: () => addPost(postController.text),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                child: const Text("Post", style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
             ],
           ),
           if (_attachedMedia != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             Stack(
               children: [
                 Container(
-                  height: 150,
+                  height: 200,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: _attachedMedia == "photo" ? Colors.green[100] : Colors.blue[100],
+                    color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey[300]!),
+                    image: _attachedMedia!.endsWith('.jpg') 
+                      ? DecorationImage(
+                          image: AssetImage('lib/assets/images/$_attachedMedia'),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                   ),
-                  child: Center(
-                    child: Icon(
-                      _attachedMedia == "photo" ? Icons.image : Icons.videocam,
-                      size: 50,
-                      color: _attachedMedia == "photo" ? Colors.green : Colors.blue,
-                    ),
-                  ),
+                  child: (_attachedMedia == "photo" || _attachedMedia == "video") 
+                    ? Center(
+                        child: Icon(
+                          _attachedMedia == "photo" ? Icons.image : Icons.videocam,
+                          size: 60,
+                          color: _attachedMedia == "photo" ? Colors.green : Colors.blue,
+                        ),
+                      )
+                    : null,
                 ),
                 Positioned(
                   top: 8,
