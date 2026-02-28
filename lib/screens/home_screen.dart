@@ -182,7 +182,7 @@ class HomeContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Agricultural Tips',
+                'Last Detects',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               TextButton(
@@ -203,28 +203,46 @@ class HomeContent extends StatelessWidget {
 
           Column(
             children: [
-              _buildTipCard(
-                '1. In the morning',
-                'Disease 1.jpg',
-                'Best time to water crops early before sunrise for optimal absorption',
+              _buildHistoryCard(
+                context,
+                {
+                  'disease': 'Tomato Early Blight',
+                  'date': '2026-02-27',
+                  'imageName': 'Disease 1.jpg',
+                  'description': 'Target-like spots on older leaves, starting near the ground.',
+                  'signs': ['Concentric rings in spots', 'Yellowing around spots', 'Stem lesions'],
+                  'prevention': ['Crop rotation', 'Remove infected debris', 'Copper-based fungicides'],
+                  'chemicals': ['Chlorothalonil', 'Mancozeb', 'Copper Fungicide'],
+                  'risk': 0.85,
+                },
               ),
               const SizedBox(height: 12),
-              _buildTipCard(
-                '2. After sunset',
-                'Disease 2.jpg',
-                'Water your plants in evening to minimize evaporation loss',
+              _buildHistoryCard(
+                context,
+                {
+                  'disease': 'Maize Rust',
+                  'date': '2026-02-25',
+                  'imageName': 'Disease 2.jpg',
+                  'description': 'Small, powdery, orange-to-brown pustules on leaf surfaces.',
+                  'signs': ['Orange pustules', 'Leaf yellowing', 'Reduced grain fill'],
+                  'prevention': ['Resistant varieties', 'Early planting', 'Foliar fungicides'],
+                  'chemicals': ['Azoxystrobin', 'Propiconazole', 'Pyraclostrobin'],
+                  'risk': 0.45,
+                },
               ),
               const SizedBox(height: 12),
-              _buildTipCard(
-                '3. Take care',
-                'Disease 3.jpg',
-                'Regular monitoring helps detect diseases early and prevent spread',
-              ),
-              const SizedBox(height: 12),
-              _buildTipCard(
-                '4. Use cool water',
-                'Disease 4.jpg',
-                'Room temperature water reduces plant stress and shock',
+              _buildHistoryCard(
+                context,
+                {
+                  'disease': 'Potato Late Blight',
+                  'date': '2026-02-20',
+                  'imageName': 'Disease 3.jpg',
+                  'description': 'Dark, water-soaked patches on leaves and stems.',
+                  'signs': ['Large dark spots', 'White fuzzy growth', 'Tuber rot'],
+                  'prevention': ['Certified seed tubers', 'Destroy cull piles', 'Timely fungicide application'],
+                  'chemicals': ['Revus Top', 'Orondis Ultra', 'Ranman'],
+                  'risk': 0.92,
+                },
               ),
             ],
           ),
@@ -270,59 +288,73 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildTipCard(String tipText, String imageName, String description) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  tipText,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
+  Widget _buildHistoryCard(BuildContext context, Map<String, dynamic> data) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          '/history_detail',
+          arguments: data,
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.grey[50],
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey[200]!),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data['disease'],
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  style: TextStyle(fontSize: 11, color: Colors.grey[600]),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    data['description'],
+                    style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Detected: ${data['date']}',
+                    style: TextStyle(fontSize: 10, color: AppTheme.primary, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              'lib/assets/images/$imageName',
-              height: 70,
-              width: 60,
-              fit: BoxFit.cover,
+            const SizedBox(width: 10),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                'lib/assets/images/${data['imageName']}',
+                height: 70,
+                width: 60,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

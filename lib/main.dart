@@ -10,6 +10,7 @@ import 'screens/profile_screen.dart';
 import 'screens/auth/sign_in.dart';
 import 'screens/auth/sign_up.dart';
 import 'screens/get_started.dart';
+import 'screens/history_detail_screen.dart';
 
 // Global notifier for theme switching
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
@@ -65,6 +66,10 @@ class CropiaApp extends StatelessWidget {
             '/profile': (context) => const ProfileScreen(),
             '/signin': (context) => const SignInScreen(),
             '/signup': (context) => const SignUpScreen(),
+            '/history_detail': (context) {
+              final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+              return HistoryDetailScreen(historyData: args);
+            },
           },
         );
       },
