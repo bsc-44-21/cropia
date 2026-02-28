@@ -106,8 +106,21 @@ class HistoryDetailScreen extends StatelessWidget {
             const SizedBox(height: 8),
             ...chemicals.map((c) => _buildListItem(c)),
             const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(),
+            ElevatedButton.icon(
+              onPressed: () {
+                final shareText = "Check out this disease detection result:\n"
+                    "Disease: $disease\n"
+                    "Risk: ${(risk * 100).round()}%\n"
+                    "Signs: ${signs.take(2).join(', ')}...";
+                
+                Navigator.pushNamed(
+                  context, 
+                  '/community',
+                  arguments: {'sharedText': shareText},
+                );
+              },
+              icon: const Icon(Icons.share),
+              label: const Text('Share to Community', style: TextStyle(fontSize: 16)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppTheme.primary,
                 foregroundColor: Colors.white,
@@ -116,7 +129,6 @@ class HistoryDetailScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text('Back to Home', style: TextStyle(fontSize: 16)),
             ),
           ],
         ),

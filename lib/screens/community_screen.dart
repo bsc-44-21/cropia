@@ -45,6 +45,19 @@ class _CommunityScreenState extends State<CommunityScreen> {
   final TextEditingController postController = TextEditingController();
   String? _attachedMedia; // Simulated attached media state (photo/video)
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      if (args != null && args.containsKey('sharedText')) {
+        setState(() {
+          postController.text = args['sharedText'];
+        });
+      }
+    });
+  }
+
   void addPost(String text) {
     if (text.trim().isEmpty && _attachedMedia == null) return;
 
