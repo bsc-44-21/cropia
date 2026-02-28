@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../theme.dart';
 
@@ -410,10 +411,15 @@ class _CommunityScreenState extends State<CommunityScreen> {
               child: post["media"].toString().endsWith('.jpg')
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Image.asset(
-                        'lib/assets/images/${post["media"]}',
-                        fit: BoxFit.cover,
-                      ),
+                      child: post["media"].toString().startsWith('/') || post["media"].toString().contains(':\\') || post["media"].toString().contains(':/')
+                          ? Image.file(
+                              File(post["media"]),
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              'lib/assets/images/${post["media"]}',
+                              fit: BoxFit.cover,
+                            ),
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
