@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1085643364739",
+    "project_id": "cropia-ba34c",
+    "storage_bucket": "cropia-ba34c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085643364739:android:cf616b86482d08a7cf7eb6",
+        "android_client_info": {
+          "package_name": "com.example.cropia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM9t6LO0S3niROSB9wgPonPPh_QZukg_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
